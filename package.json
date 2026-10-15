@@ -1,0 +1,29 @@
+{
+  "name": "afterhours-watch-party",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "npm@11.19.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n web,realtime -c magenta,cyan \"npm run dev -w @afterhours/web\" \"npm run dev -w @afterhours/realtime\"",
+    "build": "npm run build -w @afterhours/shared && npm run build -w @afterhours/realtime && npm run build -w @afterhours/web",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:load": "tsx tests/load-ten-clients.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "lint": "npm run lint -w @afterhours/web && npm run lint -w @afterhours/realtime"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "concurrently": "^9.1.2",
+    "prisma": "6.19.3",
+    "tsx": "^4.19.3",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}
