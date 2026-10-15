@@ -8,7 +8,7 @@ interface Join { room: { id: string; code: string }; token: string; accessKey?: 
 async function connect(token: string): Promise<Socket> { const socket = io(baseUrl, { auth: { token }, transports: ["websocket"] }); await new Promise<void>((resolve, reject) => { socket.once("connect", resolve); socket.once("connect_error", reject); }); await new Promise<void>((resolve, reject) => { socket.emit("room:join", (result: { ok: boolean; error?: { message: string } }) => { if (result.ok) resolve(); else reject(new Error(result.error?.message)); }); }); return socket; }
 
 async function main(): Promise<void> {
-  const started = performance.now(); const host = await request<Join>("/api/rooms", { displayName: "Load Host", title: "10-client measurement", accessMode: "PUBLIC", maxParticipants: 12, mediaId: "big-buck-bunny" });
+  const started = performance.now(); const host = await request<Join>("/api/rooms", { displayName: "Load Host", title: "10-client measurement", accessMode: "PUBLIC", maxParticipants: 10, mediaId: "oppenheimer-trailer" });
   const hostSocket = await connect(host.token); const clients: Socket[] = [hostSocket];
   for (let index = 1; index < 10; index += 1) { const member = await request<Join>("/api/rooms/join", { roomId: host.room.id, displayName: `Client ${index}` }); clients.push(await connect(member.token)); }
   const received = new Set<string>(); const delivered = new Promise<void>((resolve) => { for (const socket of clients) socket.once("room:state", (state: { version: number }) => { received.add(socket.id ?? "unknown"); socket.emit("sync:delivery", { version: state.version }); if (received.size === clients.length) resolve(); }); });

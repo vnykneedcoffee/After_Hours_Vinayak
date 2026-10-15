@@ -4,39 +4,63 @@ export const ROOM_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 export const MAX_ROOM_CAPACITY = 25;
 export const DEMO_MEDIA = [
   {
-    id: "big-buck-bunny",
-    title: "The Flower Reel",
-    description: "A bright, browser-friendly open video — perfect for a reproducible synchronized demo.",
-    genres: ["Nature", "Short"],
-    year: 2024,
-    durationLabel: "1 min",
-    poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80",
-    provider: "html5" as const,
-    src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    id: "oppenheimer-trailer",
+    title: "Oppenheimer — Official Trailer",
+    description: "Christopher Nolan's atomic-age epic, selected for an opening-night kind of watch party.",
+    genres: ["Drama", "History"],
+    year: 2023,
+    durationLabel: "3 min trailer",
+    poster: "https://img.youtube.com/vi/uYPbbksJxIg/hq720.jpg",
+    provider: "youtube" as const,
+    src: "uYPbbksJxIg",
     playable: true
   },
   {
-    id: "elephants-dream",
-    title: "Elephants Dream",
-    description: "A surreal open-film experience made for a late-night room.",
-    genres: ["Animation", "Sci-Fi"],
-    year: 2006,
-    durationLabel: "11 min",
-    poster: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=800&q=80",
-    provider: "html5" as const,
-    src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-    playable: true
-  },
-  {
-    id: "sintel",
-    title: "Sintel",
-    description: "A sweeping open-film fantasy with an emotional core.",
-    genres: ["Animation", "Fantasy"],
+    id: "inception-trailer",
+    title: "Inception — Official Trailer",
+    description: "A dream-heist blockbuster with one of the defining trailer campaigns of the 2010s.",
+    genres: ["Sci-Fi", "Thriller"],
     year: 2010,
-    durationLabel: "15 min",
-    poster: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=800&q=80",
-    provider: "html5" as const,
-    src: "https://media.w3.org/2010/05/sintel/trailer.mp4",
+    durationLabel: "2 min trailer",
+    poster: "https://img.youtube.com/vi/YoHD9XEInc0/hq720.jpg",
+    provider: "youtube" as const,
+    src: "YoHD9XEInc0",
+    playable: true
+  },
+  {
+    id: "dark-knight-trailer",
+    title: "The Dark Knight — Official Trailer",
+    description: "A brooding, high-stakes superhero classic from the defining cinema decade of the 2000s.",
+    genres: ["Action", "Crime"],
+    year: 2008,
+    durationLabel: "2 min trailer",
+    poster: "https://img.youtube.com/vi/EXeTwQWrcwY/hq720.jpg",
+    provider: "youtube" as const,
+    src: "EXeTwQWrcwY",
+    playable: true
+  },
+  {
+    id: "matrix-trailer",
+    title: "The Matrix — Official Trailer",
+    description: "The late-'90s sci-fi landmark that made everyone question the simulation.",
+    genres: ["Sci-Fi", "Action"],
+    year: 1999,
+    durationLabel: "2 min trailer",
+    poster: "https://image.tmdb.org/t/p/original/iVmDLujHcV1zaMnaahKWn4TcCS6.jpg",
+    provider: "youtube" as const,
+    src: "vKQi3bBA1y8",
+    playable: true
+  },
+  {
+    id: "godfather-trailer",
+    title: "The Godfather — Official Trailer",
+    description: "A timeless American crime classic for the room's old-school movie night.",
+    genres: ["Crime", "Drama"],
+    year: 1972,
+    durationLabel: "3 min trailer",
+    poster: "https://img.youtube.com/vi/UaVTIH8mujA/hq720.jpg",
+    provider: "youtube" as const,
+    src: "UaVTIH8mujA",
     playable: true
   }
 ] as const;
@@ -115,7 +139,7 @@ export const createRoomSchema = z.object({
   title: z.string().trim().min(2).max(80).default("Untitled AfterHours"),
   accessMode: z.enum(["PUBLIC", "PRIVATE"]).default("PRIVATE"),
   maxParticipants: z.number().int().min(2).max(MAX_ROOM_CAPACITY).default(10),
-  mediaId: mediaIdSchema.default("big-buck-bunny")
+  mediaId: mediaIdSchema.default("oppenheimer-trailer")
 });
 export const joinRoomSchema = z.object({
   roomId: z.string().min(1).optional(),
