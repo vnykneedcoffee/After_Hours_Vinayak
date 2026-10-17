@@ -112,7 +112,6 @@ export function Landing() {
   return <main className="landing-shell">
     <div className="ambient-field" aria-hidden="true"><i /><i /><i /><i /></div>
     {loading && <div className={`boot-screen ${bootLeaving ? "leaving" : ""}`} role="status" aria-label="Opening AfterHours">
-      <div className="boot-meta"><span>AFTERHOURS <i /> PRIVATE CINEMA CLUB</span><span>THE OPENING CREDITS <b>001—005</b></span></div>
       <div className="boot-title-stage" aria-hidden="true"><div className="boot-film-track">
         {[...DEMO_MEDIA, ...DEMO_MEDIA].map((item, index) => <div className="boot-film-title" data-index={index % DEMO_MEDIA.length} key={`${item.id}-${index}`}>
           <span>{String((index % DEMO_MEDIA.length) + 1).padStart(2, "0")} <i /> {item.year}</span>
@@ -125,10 +124,8 @@ export function Landing() {
           <BrandGlyph className="boot-mark" />
           <span className="boot-wordmark" aria-hidden="true">{bootLabel.split("").map((character, index) => <span className={character === " " ? "boot-letter-gap" : undefined} key={index}>{character === " " ? "\u00a0" : character}</span>)}</span><span className="sr-only">After Hours</span>
         </div>
-        <span className="boot-caption">PRIVATE CINEMA · SHARED IN REAL TIME</span>
         <div className="boot-progress" aria-hidden="true"><i /></div>
       </div>
-      <div className="boot-foot"><span>ASSEMBLING THE ROOM</span><span>AN AFTERHOURS SCREENING <i /></span></div>
     </div>}
 
     <nav className="nav shell-nav">
@@ -139,7 +136,7 @@ export function Landing() {
     <section id="top" className="stream-hero experience-hero">
       <img key={featured.id} className="hero-backdrop" src={featured.poster} alt="" />
       <div className="hero-shade" /><div className="hero-grain" />
-      <div className="hero-topline"><span><i /> PRIVATE CINEMA · OPEN TO YOUR PEOPLE</span><span>NO. 01 <b>/</b> FOREVER</span></div>
+      <div className="hero-topline"><span>NO. 01 <b>/</b> FOREVER</span></div>
       <div className="stream-copy" data-reveal>
         <p className="eyebrow"><span className="eyebrow-line" /> THE FEATURE PRESENTATION <span>· {featured.year}</span></p>
         <h1 key={`title-${featured.id}`}>{featured.title.replace(" — Official Trailer", "")}</h1>
