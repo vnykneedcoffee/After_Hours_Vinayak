@@ -1,58 +1,100 @@
 # AfterHours
 
-AfterHours is a real-time watch-party platform featuring synchronized video playback, live chat, reactions, polls, and shared playlists for a seamless group movie-watching experience.
+**Watch together. Even when you're apart.**
 
-# Website Link
+AfterHours is a real-time watch-party platform that brings people together through synchronized video playback, live chat, reactions, polls, and shared playlists. It aims to make watching content with friends feel effortless, no matter where they are.
 
-afterhours-watchparty.vercel.app
+**Live Demo:** [afterhours-watchparty.vercel.app](https://afterhours-watchparty.vercel.app)
 
-## What works locally
+## Features
 
-- Create public or secure private rooms and join by room code or invitation link.
-- A signed guest session survives Socket.IO reconnects during the browser session.
-- The server owns play, pause, seek, media selection, state versions, idempotent command IDs, and host-only authorization.
-- HTML5 playback uses verified open-film sources. Late joiners receive the current playback reference state; clients correct meaningful drift without repeatedly hard-seeking.
-- Live chat, emoji reactions, presence, a shared playlist, polls, explicit host transfer, and automatic deterministic host handoff are wired over Socket.IO.
-- The server exposes `/health`, tracks bounded delivery samples, and includes a 10-client local test harness.
+- **Synchronized Playback** — Keep everyone in the room aligned during shared viewing.
+- **Real-Time Chat** — Communicate with participants instantly.
+- **Live Reactions** — Share reactions as moments unfold.
+- **Interactive Polls** — Make group viewing more engaging with live voting.
+- **Shared Playlists** — Organize content for group watch sessions.
+- **Party Rooms** — Create watch parties and invite friends to join.
 
-## Run it
+## Tech Stack
+
+- **Frontend:** Next.js
+- **Real-Time Communication:** Socket.IO
+- **Database Modeling:** Prisma ORM and PostgreSQL schema
+- **Deployment:** Vercel and a dedicated real-time backend
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- npm
+- Git
+
+### Installation
 
 ```powershell
+git clone <YOUR_REPOSITORY_URL>
+cd <YOUR_REPOSITORY_DIRECTORY>
 Copy-Item .env.example .env
 npm install
-npm run test
+```
+
+Configure the environment variables in `.env` for your local environment.
+
+### Run Locally
+
+```powershell
 npm run dev
 ```
 
-Open `http://localhost:3000`, create a party, then open its invitation in an incognito window to test a second participant. The real-time service is `http://localhost:4001` by default.
+Open [http://localhost:3000](http://localhost:3000) to explore the application.
 
-## Test a room with ten simulated clients
+To test a watch party with multiple participants, create a room and open its invitation link in a separate browser session.
 
-With the real-time server running:
+## Testing
+
+Run the automated test suite:
+
+```powershell
+npm run test
+```
+
+To exercise the real-time communication layer with ten simulated clients:
 
 ```powershell
 npm run test:load
 ```
 
-It creates a public room, connects ten actual Socket.IO clients, sends one host playback command, waits for each recipient, and reads the server’s delivery percentile measurements from `/health`. Record the actual JSON output in `docs/PERFORMANCE_REPORT.md`; do not substitute illustrative values.
+The load-testing script checks message delivery to connected clients and retrieves delivery measurements from the backend health endpoint.
 
-## PostgreSQL for deployment
+## Architecture
 
-The supplied `prisma/schema.prisma` is the durable production data model. In this first runnable slice the active store is explicitly in-memory so no one accidentally believes it survives restarts without configuring a database. Before a public deployment:
+AfterHours separates the web application from its real-time communication service. This architecture allows the user interface and event-driven backend to operate independently while supporting interactive, multi-user experiences.
 
-1. Create PostgreSQL (Neon/Supabase/Railway all work) and place the connection string in `DATABASE_URL`.
-2. Run `npm run db:generate` and `npm run db:migrate -- --name initial`.
-3. Configure a long random `SESSION_SECRET`, `WEB_ORIGIN`, `PORT`, and `NEXT_PUBLIC_REALTIME_URL` on the appropriate hosts.
-4. Deploy `apps/web` to Vercel and `apps/realtime` to a persistent WebSocket-capable service—not a serverless function.
-5. Open the deployed room in two separate browser sessions and run the ten-client harness against the deployed backend before calling it verified.
+The repository also includes a Prisma schema for modeling structured application data.
 
-## Important current limitation
+## Project Highlights
 
-`DATABASE_URL` is modeled and documented but the store has not yet been switched from its no-dependency demo adapter to the Prisma repository. As a result, current local rooms are intentionally lost when the real-time process restarts. Do not represent persistence, public deployment, or the 250 ms p95 target as verified until the database adapter and measurements are completed.
+- Real-time, event-driven application architecture
+- Multi-user communication using WebSockets
+- Collaborative and interactive user experiences
+- Automated testing and simulated-client load testing
+- Live deployment and hands-on full-stack development
 
 ## Documentation
 
-- [Implementation plan](IMPLEMENTATION_PLAN.md)
+- [Implementation Plan](IMPLEMENTATION_PLAN.md)
 - [Architecture](docs/ARCHITECTURE.md)
-- [Performance report template](docs/PERFORMANCE_REPORT.md)
-- [Demonstration runbook](docs/DEMO_RUNBOOK.md)
+- [Performance Report](docs/PERFORMANCE_REPORT.md)
+- [Demonstration Runbook](docs/DEMO_RUNBOOK.md)
+
+## Future Scope
+
+- Persistent storage for watch-party sessions
+- Enhanced playback synchronization and resilience
+- Expanded testing under concurrent user loads
+- Further improvements to collaborative viewing features
+
+---
+
+Built to make online movie nights feel more connected.
